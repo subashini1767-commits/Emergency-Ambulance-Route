@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ambulance Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  </head>
+  <body class="dashboard-body">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Ambulance Driver Portal</p>
+        <h2>Welcome, <span id="driverName">{{ driver_name }}</span></h2>
+      </div>
+      <button id="logoutBtn" class="secondary-btn">Logout</button>
+    </header>
+
+    <main class="dashboard">
+      <section class="panel driver-profile-panel">
+        <h3>Driver Profile</h3>
+        <div class="driver-profile-grid">
+          <div><span>Name</span><strong>{{ driver_name }}</strong></div>
+          <div><span>Age</span><strong>{{ driver_age if driver_age is not none else 'Not provided' }}</strong></div>
+          <div><span>Contact</span><strong>{{ driver_phone or 'Not provided' }}</strong></div>
+          <div><span>Today logged in</span><strong>{{ (daily_login_seconds // 3600) }}h {{ ((daily_login_seconds % 3600) // 60) }}m</strong></div>
+          <div><span>Reward points</span><strong>{{ reward_points }} pts</strong></div>
+        </div>
+      </section>
+
+      <section class="panel controls-panel">
+        <h3>Emergency Location</h3>
+
+        <div class="location-row">
+          <input id="addressInput" type="text" placeholder="Enter a Tamil Nadu emergency location" />
+          <button id="useLocationBtn" class="ghost-btn">Use My Location</button>
+        </div>
+
+        <div class="location-meta">
+          <span id="locationStatus">No location selected yet.</span>
+        </div>
+
+        <button id="searchHospitalBtn" class="primary-btn full-width">Find 6-7 Nearby Hospitals & Route</button>
+        <div id="searchError" class="error-message" aria-live="polite"></div>
+      </section>
+
+      <section class="panel map-panel">
+        <button id="exitMapBtn" class="map-exit-btn" type="button">Back to hospital list</button>
+        <div id="map"></div>
+      </section>
+
+      <section class="panel results-panel">
+        <h3>Nearby Hospitals With Available Beds</h3>
+        <div id="hospitalResults" class="hospital-list"></div>
+      </section>
+
+      <section class="panel recommendation-panel">
+        <h3>Recommended Hospital</h3>
+        <div id="recommendedHospital" class="recommendation-box">
+          No hospital selected yet.
+        </div>
+        <button id="startNavigationBtn" class="success-btn" disabled>Start Navigation</button>
+        <button id="finishBtn" class="finish-btn" disabled>Finish Emergency</button>
+        <button id="newEmergencyBtn" class="secondary-btn">Enter Another Emergency Location</button>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emergency Ambulance Route Optimization System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body class="auth-bg">
+    <div class="portal-clock" aria-live="polite" style="position: fixed; top: 20px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 4px; min-width: 230px; padding: 15px 18px; border: 3px solid #ef4444; border-radius: 12px; background: #071220; color: #ffffff; box-shadow: 0 0 24px rgba(239, 68, 68, 0.55); text-align: right;">
+      <span class="portal-clock-label" style="color: #fecaca; font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;">AMBULANCE DRIVER PORTAL</span>
+      <span class="portal-clock-status" style="color: #86efac; font-size: 12px; font-weight: 800;">ONLINE FOR SIGN IN</span>
+      <strong id="portalTime" style="color: #ffffff; font-size: 24px; font-weight: 900;">{{ portal_time or 'Portal time unavailable' }}</strong>
+      <span id="portalDate" style="color: #dbeafe; font-size: 13px; font-weight: 700;">{{ portal_date or 'Current date unavailable' }}</span>
+    </div>
+    <div class="login-page-time" aria-live="polite">
+      <span>Driver login page time</span>
+      <strong>{{ login_page_time or 'Time unavailable' }}</strong>
+      <small>Page open for <b id="loginElapsed">00:00</b></small>
+    </div>
+    <div class="portal-usage" aria-live="polite">
+      <strong>{{ portal_driver_users or 0 }}</strong>
+      <span>drivers used portal</span>
+      <strong>{{ portal_page_visits or 0 }}</strong>
+      <span>portal visits</span>
+    </div>
+    <div class="login-container">
+      <div class="login-card">
+        <div class="brand-block">
+          <div class="logo-icon">+</div>
+          <h1>Emergency Ambulance</h1>
+          <p>Route Optimization System</p>
+              <div class="auth-heading">Driver Login / Sign in</div>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" placeholder="Enter username" />
+
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Enter password" />
+
+          <div class="auth-actions">
+            <button type="button" id="backBtn" class="secondary-btn">Back</button>
+            <button type="submit" id="loginBtn" class="secondary-btn">Login</button>
+            <button type="submit" id="signInBtn" class="primary-btn">Sign in</button>
+          </div>
+          {% if error %}
+            <div class="error-message" aria-live="polite">{{ error }}</div>
+          {% endif %}
+          <div id="loginError" class="error-message" aria-live="polite"></div>
+        </form>
+        <div class="register-divider">New ambulance driver?</div>
+        <form id="registerForm" class="register-form" novalidate>
+          <label for="fullName">Driver name</label>
+          <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" />
+          <label for="driverAge">Age</label>
+          <input id="driverAge" name="driverAge" type="number" min="18" max="80" placeholder="Enter your age" />
+          <label for="driverPhone">Contact number</label>
+          <input id="driverPhone" name="driverPhone" type="tel" placeholder="Enter contact number" />
+          <label for="newUsername">Choose username</label>
+          <input id="newUsername" name="newUsername" type="text" placeholder="Choose your username" />
+          <label for="newPassword">Create password</label>
+          <input id="newPassword" name="newPassword" type="password" placeholder="At least 6 characters" />
+          <button type="submit" class="success-btn">Create driver account</button>
+          <div id="registerMessage" class="error-message" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
